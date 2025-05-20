@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="dashboard">
+    <h2>Assessment Progress ({{ progress.completed_tests|length }}/{{ total_tests }})</h2>
+    
+    <div class="test-grid">
+        {% for test in [
+            ('artistic', '🎨 Artistic', 'Shape Drawing'),
+            ('logical', '🔢 Logical', 'Pattern Completion'),
+            ('linguistic', '📖 Linguistic', 'Rhyme Recital'),
+            ('musical', '🎵 Musical', 'Rhythm Repetition'),
+            ('bodily', '🤸 Bodily', 'Movement Imitation'),
+            ('interpersonal', '👥 Interpersonal', 'Behavior Recognition'),
+            ('naturalistic', '🌳 Naturalistic', 'Habitat Matching'),
+            ('visual', '🔄 Visual-Spatial', 'Shape Rotation'),
+            ('memory', '🧠 Memory', 'Creature Cards')
+        ] %}
+        <div class="test-card {{ 'completed' if test[0] in progress.completed_tests else '' }}">
+            <h3>{{ test[1] }}</h3>
+            <p>{{ test[2] }}</p>
+            <a href="{{ url_for('test', test_name=test[0]) }}" class="btn">
+                {{ 'Review' if test[0] in progress.completed_tests else 'Start' }}
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

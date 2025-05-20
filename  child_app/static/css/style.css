@@ -1,0 +1,103 @@
+/* Add to existing CSS */
+.test-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.test-card {
+    padding: 15px;
+    text-align: center;
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.test-card h3 {
+    margin: 10px 0;
+    font-size: 1.2em;
+}
+
+.pattern-options {
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.pattern-options label {
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.pattern-options label:hover {
+    background: #f8f9fa;
+}
+
+.upload-box input[type="file"] {
+    margin: 20px 0;
+}
+
+.progress {
+    margin-top: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: #4CAF50;
+}
+/* Summary Page Styles */
+.summary-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.strengths-card, .improvements-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.strengths-card ol, .improvements-card ol {
+    padding-left: 20px;
+    margin-top: 15px;
+}
+
+.strengths-card li, .improvements-card li {
+    margin: 15px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.score {
+    background: #4CAF50;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.9em;
+}
+
+.chart-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    height: 500px;
+}
+
+.actions {
+    margin-top: 40px;
+    text-align: center;
+}

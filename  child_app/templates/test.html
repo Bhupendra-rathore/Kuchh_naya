@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="test-container">
+    {% if test_name == 'artistic' %}
+        <div class="artistic-test">
+            <h2>Artistic Intelligence</h2>
+            <div class="test-header">
+                <h3>Shape Drawing & Coloring</h3>
+            </div>
+
+            <div class="instructions-box">
+                <p>Ask your child to:</p>
+                <ol>
+                    <li>Draw these shapes in individual boxes:
+                        <ul>
+                            <li>Triangle</li>
+                            <li>Square</li>
+                            <li>Circle</li>
+                        </ul>
+                    </li>
+                    <li>Color them:
+                        <ul>
+                            <li>🔵 Triangle - Blue</li>
+                            <li>🔴 Square - Red</li>
+                            <li>🟡 Circle - Yellow</li>
+                        </ul>
+                    </li>
+                       </ol>
+            </div>
+
+            <form method="POST" enctype="multipart/form-data" class="upload-form">
+                <div class="upload-container">
+                    <input type="file" id="drawingUpload" name="file" accept="image/*" required hidden>
+                    <label for="drawingUpload" class="upload-label">
+                        <div class="upload-box">
+                            <span class="upload-icon">📤</span>
+                            <h4>Upload Drawing</h4>
+                            <p>Click to browse files (PNG, JPG)</p>
+                        </div>
+                    </label>
+                    <div id="fileName" class="file-name"></div>
+                </div>
+                <button type="submit" class="submit-btn">Submit Drawing</button>
+            </form>
+        </div>
+
+    {% elif test_name == 'logical' %}
+        <h2>Logical-Mathematical</h2>
+        <!-- Logical test content -->
+
+    {% elif test_name == 'linguistic' %}
+        <h2>Linguistic Intelligence</h2>
+        <!-- Linguistic test content -->
+
+    {% elif test_name == 'musical' %}
+        <h2>Musical Intelligence</h2>
+        <!-- Musical test content -->
+
+    {% elif test_name == 'bodily' %}
+        <h2>Bodily-Kinesthetic</h2>
+        <!-- Bodily test content -->
+
+    {% elif test_name == 'interpersonal' %}
+        <h2>Interpersonal Intelligence</h2>
+        <!-- Interpersonal test content -->
+
+    {% elif test_name == 'naturalistic' %}
+        <h2>Naturalistic Intelligence</h2>
+        <!-- Naturalistic test content -->
+
+    {% elif test_name == 'visual' %}
+        <h2>Visual-Spatial</h2>
+        <!-- Visual test content -->
+
+    {% elif test_name == 'memory' %}
+        <h2>Memory & Sequencing</h2>
+        <!-- Memory test content -->
+
+    {% endif %}  <!-- This was missing -->
+
+  <div class="progress">
+  Completed {{ progress.completed_tests|length }} of 9 tests
+</div>
+</div>
+{% endblock %}
