@@ -1,11 +1,24 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style>
+     .summary-header {
+         background: linear-gradient(135deg, #b3b4dd 0%, #6b6175 100%);
+        backdrop-filter: blur(8px);
+        border-radius: 12px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    body{
+         background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    }
+</style>
 <div class="summary-container">
     <div class="summary-header">
         <h1>Assessment Results</h1>
         <div class="child-info">
-            <h2>{{ child_info.name }}'s Intelligence Profile</h2>
+            <h2>{{ child_info.name }} Intelligence Profile</h2>
             <p>Age: {{ child_info.age }}</p>
             <p>Assessment completed on {{ progress.start_time }}</p>
         </div>

@@ -1,6 +1,100 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style>
+    /* Dashboard Styles */
+    .dashboard {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem 1.5rem;
+        background-color: #6366f1;
+    }
+
+    .dashboard h2 {
+        color: #2d3436;
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+        text-align: center;
+        font-weight: 600;
+    }
+
+    .test-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        padding: 0 1rem;
+    }
+
+    .test-card {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        transition: all 0.2s ease;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        text-align: center;
+    }
+
+    .test-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .test-card h3 {
+        font-size: 1.4rem;
+        margin: 0.5rem 0;
+        color: #2d3436;
+        font-weight: 600;
+    }
+
+    .test-card p {
+        color: #636e72;
+        margin-bottom: 1.2rem;
+        font-size: 0.95rem;
+    }
+
+    .test-card .btn {
+        display: inline-block;
+        padding: 0.8rem 1.5rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        width: 100px;
+    }
+
+    .test-card:not(.completed) .btn {
+        background: #6366f1;
+        color: white;
+        border: 2px solid #6366f1;
+    }
+
+    .test-card.completed .btn {
+        background: #10b981;
+        color: white;
+        border: 2px solid #10b981;
+    }
+
+    .test-card .btn:hover {
+        opacity: 0.9;
+        transform: translateY(-1px);
+    }
+
+    @media (max-width: 768px) {
+        .dashboard {
+            padding: 1.5rem 1rem;
+        }
+        
+        .dashboard h2 {
+            font-size: 1.5rem;
+        }
+        
+        .test-grid {
+            grid-template-columns: 1fr;
+            padding: 0;
+        }
+    }
+</style>
 <div class="dashboard">
     <h2>Assessment Progress ({{ progress.completed_tests|length }}/{{ total_tests }})</h2>
     

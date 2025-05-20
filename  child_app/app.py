@@ -31,7 +31,7 @@ def initialize_session():
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', progress=session['progress'])
 
 @app.route('/start_assessment', methods=['POST'])
 def start_assessment():

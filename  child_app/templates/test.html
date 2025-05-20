@@ -1,6 +1,150 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style>
+    /* Unified Purple Theme */
+    .test-container {
+        background: linear-gradient(135deg, #206ec2 0%, #553c9a 100%);
+        min-height: 100vh;
+        padding: 2rem;
+        color: rgb(20, 2, 2);
+    }
+
+    /* Shared Card Styles */
+    .artistic-test,
+    .logical-test,
+    .linguistic-test,
+    .musical-test,
+    .interpersonal-test,
+    .naturalistic-test,
+    .visual-test,
+    .memory-test {
+        background: rgb(150, 51, 255);
+        backdrop-filter: blur(8px);
+        border-radius: 12px;
+        padding: 2rem;
+        margin: 1rem 0;
+        border: 1px solid black;
+    }
+
+    /* Unified Header Styles */
+    h2, h3 {
+        color: white !important;
+        margin-bottom: 1.5rem;
+    }
+
+    /* Consistent Button Styles */
+    .submit-btn, .submit-button, .nav-button {
+        background: #f7fdd8;
+        color: #5934c0 !important;
+        border: 2px solid #e9d8fd !important;
+        padding: 0.8rem 1.5rem;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+    }
+
+    .nav-button {
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    button[type="submit"]:hover, .nav-button:hover {
+        filter: brightness(110%);
+        transform: translateY(-1px);
+    }
+
+    /* Upload Areas */
+    .upload-box {
+        background: rgba(245, 220, 242, 0.93);
+        border: 5px dashed rgba(255, 255, 255, 0.3);
+        padding: 2rem;
+        border-radius: 12px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .upload-box:hover {
+        background: rgba(237, 233, 233, 0.15);
+    }
+
+    /* Progress Indicator */
+    .progress {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: white;
+        padding: 0.8rem 1.2rem;
+        border-radius: 8px;
+        color: rgb(24, 147, 63);
+    }
+
+    /* Result Boxes */
+    .result-box {
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+    }
+
+    .correct {
+        background: rgba(104, 211, 145, 0.2);
+        border: 2px solid #68d391;
+    }
+
+    .incorrect {
+        background: rgba(255, 77, 79, 0.2);
+        border: 2px solid #ff4d4f;
+    }
+
+    /* Pattern/Shape Displays */
+    .pattern-circle,
+    .shape-preview {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin: 0 0.5rem;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    /* Audio Player Customization */
+    audio::-webkit-media-controls-panel {
+        background: rgba(255, 255, 255, 0.1);
+    }
+    /* Unified Card Sizing */
+.artistic-test,
+.logical-test,
+.linguistic-test,
+.musical-test,
+.interpersonal-test,
+.naturalistic-test,
+.visual-test,
+.memory-test {
+    min-height: 400px; /* Fixed minimum height */
+    width: 100%; /* Full container width */
+    max-width: 800px; /* Maximum card width */
+    margin: 1rem auto; /* Center cards */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribute content */
+}
+
+/* Content Containers */
+.instructions-box,
+.pattern-display,
+.upload-container,
+.shape-options {
+    flex-grow: 1; /* Take available space */
+    margin: 1.5rem 0;
+}
+
+/* Navigation Container */
+.navigation {
+    margin-top: auto; /* Push to bottom */
+    padding-top: 2rem;
+}
+</style>
+
 <div class="test-container">
     {% if test_name == 'artistic' %}
         <div class="artistic-test">
@@ -37,21 +181,23 @@
                     </ol>
                 </div>
 
-                <div class="upload-container">
-                    <input type="file" id="drawingUpload" name="file" accept="image/*" required hidden>
-                    <label for="drawingUpload" class="upload-label">
-                        <div class="upload-box">
-                            <span class="upload-icon">📤</span>
-                            <h4>Upload Drawing</h4>
-                            <p>Click to browse files (PNG, JPG)</p>
-                        </div>
-                    </label>
-                    <div id="fileName" class="file-name"></div>
-                </div>
+               <div class="upload-container">
+    <input type="file" id="drawingUpload" name="file" accept="image/*" required hidden>
+    <label for="drawingUpload" class="upload-label">
+        <div class="upload-box">
+            <span class="upload-icon">📤</span>
+            <h4>Upload Drawing</h4>
+            <p>Click to browse files (PNG, JPG)</p>
+        </div>
+    </label>
+    <div id="fileName" class="file-name">
+        <!-- File name will appear here -->
+    </div>
+</div>
                 <button type="submit" class="submit-btn">Submit Drawing</button>
                  <div class="navigation">
                    
-                    </button>
+                    
                     <a href="{{ url_for('test', test_name='logical') }}" class="nav-button">
                         Next: logical &gt;
                     </a>

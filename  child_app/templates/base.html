@@ -5,13 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Child Intelligence Assessment</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+      body {
+  background-color: rgb(150, 51, 255); /* RGB format */
+  /* Or with transparency: */
+  background-color: rgba(92, 51, 255, 0.5); /* RGBA format */
+}
+    </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Child Intelligence Assessment</h1>
+            
             {% if request.path not in ['/', '/summary'] %}
-                <a href="{{ url_for('dashboard') }}" class="back-btn">← Back to Dashboard</a>
+              <a href="{{ url_for('dashboard') }}" class="btn dashboard-btn">
+    ← Back to Dashboard
+</a>
             {% endif %}
         </header>
         {% block content %}{% endblock %}
