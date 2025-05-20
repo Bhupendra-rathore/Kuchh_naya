@@ -2,9 +2,256 @@
 
 {% block content %}
 <div class="summary-container">
-    <h2>Assessment Summary</h2>
-    <div class="summary-grid">
-        <!-- Include summary components -->
+    <div class="summary-header">
+        <h1>Assessment Results</h1>
+        <div class="child-info">
+            <h2>{{ child_info.name }}'s Intelligence Profile</h2>
+            <p>Age: {{ child_info.age }}</p>
+            <p>Assessment completed on {{ progress.start_time }}</p>
+        </div>
+    </div>
+
+    <div class="profile-section">
+        <h3>Intelligence Strengths</h3>
+        <div class="strengths-box">
+            {% for strength, score in profile.strengths %}
+            <div class="strength-item">
+                <div class="strength-name">{{ strength }}</div>
+                <div class="strength-score">{{ score }}%</div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <h3>Complete Intelligence Profile</h3>
+        <div class="intelligence-chart">
+            {% for intelligence_type, score in profile.scores.items() %}
+            <div class="chart-row">
+                <div class="intelligence-label">{{ profile.intelligence_names[intelligence_type] }}</div>
+                <div class="score-bar-container">
+                    <div class="score-bar" style="width: {{ score }}%">
+                        <span class="score-value">{{ score }}%</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="detailed-results">
+        <h3>Detailed Test Results</h3>
+        
+        <!-- Artistic Test Results -->
+        {% if 'artistic' in progress.results %}
+        <div class="test-result artistic">
+            <h4>Artistic Intelligence</h4>
+            {% if progress.results.artistic.status == 'uploaded' %}
+            <div class="result-content">
+                <p>Drawing submitted successfully</p>
+                <img src="{{ progress.results.artistic.file_path }}" alt="Child's Drawing" class="result-image">
+                <p class="timestamp">Completed on {{ progress.results.artistic.timestamp }}</p>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+        
+        <!-- Logical Test Results -->
+        {% if 'logical' in progress.results %}
+        <div class="test-result logical">
+            <h4>Logical-Mathematical Intelligence</h4>
+            <div class="result-content">
+                <p>Pattern Completion: 
+                    {% if progress.results.logical.is_correct %}
+                    <span class="correct">Correct</span>
+                    {% else %}
+                    <span class="incorrect">Incorrect</span>
+                    {% endif %}
+                </p>
+                <p class="answer-detail">
+                    Child's answer: {{ progress.results.logical.user_answer }}<br>
+                    Correct answer: {{ progress.results.logical.correct_answer }}
+                </p>
+                <p class="timestamp">Completed on {{ progress.results.logical.timestamp }}</p>
+            </div>
+        </div>
+        {% endif %}
+        
+        <!-- Linguistic Test Results -->
+        {% if 'linguistic' in progress.results %}
+        <div class="test-result linguistic">
+            <h4>Linguistic Intelligence</h4>
+            {% if progress.results.linguistic.status == 'uploaded' %}
+            <div class="result-content">
+                <p>Audio recording submitted successfully</p>
+                <audio controls class="result-audio">
+                    <source src="{{ progress.results.linguistic.file_path }}" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+                <p class="timestamp">Completed on {{ progress.results.linguistic.timestamp }}</p>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+        
+        <!-- Musical Test Results -->
+        {% if 'musical' in progress.results %}
+        <div class="test-result musical">
+            <h4>Musical Intelligence</h4>
+            {% if progress.results.musical.status == 'uploaded' %}
+            <div class="result-content">
+                <p>Rhythm recording submitted successfully</p>
+                <audio controls class="result-audio">
+                    <source src="{{ progress.results.musical.file_path }}" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+                <p class="timestamp">Completed on {{ progress.results.musical.timestamp }}</p>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+        
+        <!-- Interpersonal Test Results -->
+        {% if 'interpersonal' in progress.results %}
+        <div class="test-result interpersonal">
+            <h4>Interpersonal Intelligence</h4>
+            <div class="result-content">
+                <p>Behavior Recognition: 
+                    {% if progress.results.interpersonal.is_correct %}
+                    <span class="correct">Correct</span>
+                    {% else %}
+                    <span class="incorrect">Incorrect</span>
+                    {% endif %}
+                </p>
+                <p class="answer-detail">
+                    Child's answer: Child {{ progress.results.interpersonal.user_answer }}<br>
+                    Correct answer: {{ progress.results.interpersonal.correct_answer }}
+                </p>
+                <p class="timestamp">Completed on {{ progress.results.interpersonal.timestamp }}</p>
+            </div>
+        </div>
+        {% endif %}
+        
+        <!-- Naturalistic Test Results -->
+        {% if 'naturalistic' in progress.results %}
+        <div class="test-result naturalistic">
+            <h4>Naturalistic Intelligence</h4>
+            <div class="result-content">
+                <p>Habitat Matching: 
+                    {% if progress.results.naturalistic.is_correct %}
+                    <span class="correct">All Correct</span>
+                    {% else %}
+                    <span class="incorrect">Partially Correct</span>
+                    {% endif %}
+                </p>
+                <div class="answer-detail">
+                    <p>Child selected:</p>
+                    <ul>
+                        {% for animal in progress.results.naturalistic.answers %}
+                        <li class="{% if animal in progress.results.naturalistic.correct_answers %}correct{% else %}incorrect{% endif %}">
+                            {{ animal }} {% if animal in progress.results.naturalistic.correct_answers %}✓{% else %}✗{% endif %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <p>Correct answers: {{ progress.results.naturalistic.correct_answers|join(', ') }}</p>
+                </div>
+                <p class="timestamp">Completed on {{ progress.results.naturalistic.timestamp }}</p>
+            </div>
+        </div>
+        {% endif %}
+        
+        <!-- Visual-Spatial Test Results -->
+        {% if 'visual' in progress.results %}
+        <div class="test-result visual">
+            <h4>Visual-Spatial Intelligence</h4>
+            <div class="result-content">
+                <p>Shape Rotation: 
+                    {% if progress.results.visual.is_correct %}
+                    <span class="correct">Correct</span>
+                    {% else %}
+                    <span class="incorrect">Incorrect</span>
+                    {% endif %}
+                </p>
+                <p class="answer-detail">
+                    Child's answer: {{ progress.results.visual.user_answer }}<br>
+                    Correct answer: {{ progress.results.visual.correct_answer }}
+                </p>
+                <p class="timestamp">Completed on {{ progress.results.visual.timestamp }}</p>
+            </div>
+        </div>
+        {% endif %}
+        
+        <!-- Memory Test Results -->
+        {% if 'memory' in progress.results %}
+        <div class="test-result memory">
+            <h4>Memory & Sequencing</h4>
+            <div class="result-content">
+                <p>Creature Card Game: 
+                    {% if progress.results.memory.is_correct %}
+                    <span class="correct">Correct</span>
+                    {% else %}
+                    <span class="incorrect">Incorrect</span>
+                    {% endif %}
+                </p>
+                <p class="answer-detail">
+                    <strong>Question:</strong> What did the Monkey do after the Panda ate bamboo?<br>
+                    <strong>Child's answer:</strong> {{ progress.results.memory.user_answer_text }}<br>
+                    <strong>Correct answer:</strong> {{ progress.results.memory.correct_answer }}
+                </p>
+                <p class="timestamp">Completed on {{ progress.results.memory.timestamp }}</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="recommendations">
+        <h3>Recommendations for Development</h3>
+        <div class="recommendations-content">
+            {% for strength, score in profile.strengths %}
+            <div class="recommendation-box">
+                <h4>{{ strength }} Intelligence</h4>
+                <p>Based on your child's strong performance in {{ strength }} intelligence, consider these activities:</p>
+                <ul>
+                    {% if strength == 'Artistic' %}
+                    <li>Encourage drawing and painting with different materials</li>
+                    <li>Visit art museums and discuss different styles</li>
+                    <li>Explore craft projects that use varied techniques</li>
+                    {% elif strength == 'Logical-Mathematical' %}
+                    <li>Introduce puzzle games that increase in difficulty</li>
+                    <li>Practice math problems that require creative solutions</li>
+                    <li>Explore coding activities designed for children</li>
+                    {% elif strength == 'Linguistic' %}
+                    <li>Read together daily and discuss the stories</li>
+                    <li>Encourage journal writing or storytelling</li>
+                    <li>Play word games like Scrabble Junior or Boggle</li>
+                    {% elif strength == 'Musical' %}
+                    <li>Consider music lessons for an instrument of interest</li>
+                    <li>Create music with household items</li>
+                    <li>Listen to diverse musical styles and discuss them</li>
+                    {% elif strength == 'Interpersonal' %}
+                    <li>Encourage cooperative play with peers</li>
+                    <li>Discuss emotions and feelings in books and movies</li>
+                    <li>Practice role-playing different social scenarios</li>
+                    {% elif strength == 'Naturalistic' %}
+                    <li>Explore nature through hiking or gardening</li>
+                    <li>Visit zoos and nature centers</li>
+                    <li>Start a collection of natural objects (rocks, leaves)</li>
+                    {% elif strength == 'Visual-Spatial' %}
+                    <li>Work with building blocks, LEGOs, or 3D puzzles</li>
+                    <li>Practice reading maps and following directions</li>
+                    <li>Try origami or other spatial crafts</li>
+                    {% elif strength == 'Memory & Sequencing' %}
+                    <li>Play memory matching games</li>
+                    <li>Practice recalling sequences forward and backward</li>
+                    <li>Create and follow multi-step recipes together</li>
+                    {% endif %}
+                </ul>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="action-buttons">
+        <a href="{{ url_for('download_report', user_id=progress.user_id) }}" class="download-button">Download PDF Report</a>
+        <a href="{{ url_for('index') }}" class="home-button">Back to Home</a>
     </div>
 </div>
 {% endblock %}

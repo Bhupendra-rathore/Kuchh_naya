@@ -5,31 +5,38 @@
     {% if test_name == 'artistic' %}
         <div class="artistic-test">
             <h2>Artistic Intelligence</h2>
-            <div class="test-header">
-                <h3>Shape Drawing & Coloring</h3>
-            </div>
+            {% if result and result.status == 'uploaded' %}
+                <div class="upload-success">
+                    ✅ Drawing uploaded successfully!
+                    <img src="{{ result.file_path }}" alt="Uploaded Drawing" class="preview-image">
+                </div>
+            {% endif %}
 
-            <div class="instructions-box">
-                <p>Ask your child to:</p>
-                <ol>
-                    <li>Draw these shapes in individual boxes:
-                        <ul>
-                            <li>Triangle</li>
-                            <li>Square</li>
-                            <li>Circle</li>
-                        </ul>
-                    </li>
-                    <li>Color them:
-                        <ul>
-                            <li>🔵 Triangle - Blue</li>
-                            <li>🔴 Square - Red</li>
-                            <li>🟡 Circle - Yellow</li>
-                        </ul>
-                    </li>
-                       </ol>
-            </div>
+            <form method="POST" enctype="multipart/form-data">
+                <div class="test-header">
+                    <h3>Shape Drawing & Coloring</h3>
+                </div>
 
-            <form method="POST" enctype="multipart/form-data" class="upload-form">
+                <div class="instructions-box">
+                    <p>Ask your child to:</p>
+                    <ol>
+                        <li>Draw these shapes in individual boxes:
+                            <ul>
+                                <li>Triangle</li>
+                                <li>Square</li>
+                                <li>Circle</li>
+                            </ul>
+                        </li>
+                        <li>Color them:
+                            <ul>
+                                <li>🔵 Triangle - Blue</li>
+                                <li>🔴 Square - Red</li>
+                                <li>🟡 Circle - Yellow</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+
                 <div class="upload-container">
                     <input type="file" id="drawingUpload" name="file" accept="image/*" required hidden>
                     <label for="drawingUpload" class="upload-label">
@@ -42,45 +49,457 @@
                     <div id="fileName" class="file-name"></div>
                 </div>
                 <button type="submit" class="submit-btn">Submit Drawing</button>
+                 <div class="navigation">
+                   
+                    </button>
+                    <a href="{{ url_for('test', test_name='logical') }}" class="nav-button">
+                        Next: logical &gt;
+                    </a>
+                </div>
             </form>
         </div>
 
     {% elif test_name == 'logical' %}
-        <h2>Logical-Mathematical</h2>
-        <!-- Logical test content -->
+        <div class="logical-test">
+            {% if result %}
+                <div class="result-box {% if result.is_correct %}correct{% else %}incorrect{% endif %}">
+                    {% if result.is_correct %}
+                        ✅ Correct! Well done!
+                    {% else %}
+                        ❌ Try again! Correct answer was {{ result.correct_answer }}
+                    {% endif %}
+                </div>
+            {% endif %}
 
-    {% elif test_name == 'linguistic' %}
-        <h2>Linguistic Intelligence</h2>
-        <!-- Linguistic test content -->
+            <h2>Logical-Mathematical Intelligence</h2>
+            <div class="test-header">
+                <h3>Pattern Completion</h3>
+            </div>
 
-    {% elif test_name == 'musical' %}
-        <h2>Musical Intelligence</h2>
-        <!-- Musical test content -->
+            <div class="instructions-box">
+                <p>Choose what comes next in the pattern:</p>
+                <div class="pattern-display">
+                    <div class="pattern-circle red"></div>
+                    <div class="pattern-circle blue"></div>
+                    <div class="pattern-circle red"></div>
+                    <div class="pattern-circle blue"></div>
+                    <div class="pattern-question">?</div>
+                </div>
+            </div>
 
-    {% elif test_name == 'bodily' %}
-        <h2>Bodily-Kinesthetic</h2>
-        <!-- Bodily test content -->
+            <form method="POST" class="pattern-form">
+                <div class="pattern-options">
+                    <label class="option-card">
+                        <input type="radio" name="answer" value="red" required>
+                        <div class="option-content">
+                            <span class="option-letter">A</span>
+                            <div class="color-circle red"></div>
+                        </div>
+                    </label>
+
+                    <label class="option-card">
+                        <input type="radio" name="answer" value="blue">
+                        <div class="option-content">
+                            <span class="option-letter">B</span>
+                            <div class="color-circle blue"></div>
+                        </div>
+                    </label>
+
+                    <label class="option-card">
+                        <input type="radio" name="answer" value="green">
+                        <div class="option-content">
+                            <span class="option-letter">C</span>
+                            <div class="color-circle green"></div>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="navigation">
+                    <a href="{{ url_for('test', test_name='artistic') }}" class="nav-button">
+                        &lt; Previous: Artistic
+                    </a>
+                    <button type="submit" class="submit-button">
+                        Submit Answer
+                    </button>
+                    <a href="{{ url_for('test', test_name='linguistic') }}" class="nav-button">
+                        Next: Linguistic &gt;
+                    </a>
+                </div>
+            </form>
+        </div>
+
+   {% elif test_name == 'linguistic' %}
+<div class="linguistic-test">
+    <h2>Linguistic Intelligence</h2>
+    
+    {% if result and result.status == 'uploaded' %}
+    <div class="upload-success">
+        ✅ Recording uploaded successfully!
+        <audio controls class="audio-preview">
+            <source src="{{ result.file_path }}" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data">
+        <div class="test-header">
+            <h3>Rhyme Recital</h3>
+        </div>
+
+        <div class="instructions-box">
+            <p>Record your child reciting this poem:</p>
+            <div class="poem-text">
+                <strong>Twinkle twinkle little star.<br>
+                How I wonder what you are?<br>
+                Up above the world so high,<br>
+                Like a diamond in the sky!</strong>
+            </div>
+        </div>
+
+        <div class="upload-container">
+            <input type="file" id="audioUpload" name="file" accept="audio/*" required hidden>
+            <label for="audioUpload" class="upload-label">
+                <div class="upload-box audio-upload">
+                    <span class="upload-icon">🎤</span>
+                    <h4>Upload Recording</h4>
+                    <p>Click to browse audio files (MP3, WAV)</p>
+                </div>
+            </label>
+            <div id="audioFileName" class="file-name"></div>
+        </div>
+
+        <div class="navigation">
+            <a href="{{ url_for('test', test_name='logical') }}" class="nav-button">
+                &lt; Previous: Logical
+            </a>
+            <button type="submit" class="submit-button">
+                Submit Recording
+            </button>
+            <a href="{{ url_for('test', test_name='musical') }}" class="nav-button">
+                Next: Musical &gt;
+            </a>
+        </div>
+    </form>
+</div>
+   {% elif test_name == 'musical' %}
+<div class="musical-test">
+    <h2>Musical Intelligence</h2>
+    
+    {% if result and result.status == 'uploaded' %}
+    <div class="upload-success">
+        ✅ Rhythm recording uploaded successfully!
+        <audio controls class="audio-preview">
+            <source src="{{ result.file_path }}" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data">
+        <div class="test-header">
+            <h3>Rhythm Repetition</h3>
+        </div>
+
+        <div class="instructions-box">
+            <p>Play the rhythm and ask your child to clap along:</p>
+            <div class="lyrics-text">
+                <strong>Jingle bells, jingle bells, jingle all the way.<br>
+                Oh what fun it is to ride on a one horse open sleigh!</strong>
+            </div>
+        </div>
+
+        <div class="upload-container">
+            <input type="file" id="rhythmUpload" name="file" accept="audio/*" required hidden>
+            <label for="rhythmUpload" class="upload-label">
+                <div class="upload-box music-upload">
+                    <span class="upload-icon">🎵</span>
+                    <h4>Upload Recording</h4>
+                    <p>Click to browse audio files (MP3, WAV)</p>
+                </div>
+            </label>
+            <div id="musicFileName" class="file-name"></div>
+        </div>
+
+        <div class="navigation">
+            <a href="{{ url_for('test', test_name='linguistic') }}" class="nav-button">
+                &lt; Previous: Linguistic
+            </a>
+            <button type="submit" class="submit-button">
+                Submit Recording
+            </button>
+            <a href="{{ url_for('test', test_name='interpersonal') }}" class="nav-button">
+                Next: Interpersonal Intelligence &gt;
+            </a>
+        </div>
+    </form>
+</div>
+
+   
 
     {% elif test_name == 'interpersonal' %}
-        <h2>Interpersonal Intelligence</h2>
-        <!-- Interpersonal test content -->
+<div class="interpersonal-test">
+    <h2>Interpersonal Intelligence</h2>
+    
+    {% if result %}
+    <div class="result-box {% if result.is_correct %}correct{% else %}incorrect{% endif %}">
+        {% if result.is_correct %}
+            ✅ Correct! Well observed!
+        {% else %}
+            ❌ Let's try again! The kind child was {{ result.correct_answer }}
+        {% endif %}
+    </div>
+    {% endif %}
 
-    {% elif test_name == 'naturalistic' %}
-        <h2>Naturalistic Intelligence</h2>
-        <!-- Naturalistic test content -->
+    <form method="POST">
+        <div class="test-header">
+            <h3>Behavior Recognition</h3>
+        </div>
+
+        <div class="instructions-box">
+            <p>Watch the video with your child and help them answer:</p>
+            <div class="question-box">
+                <strong>Who was being kind in the video?</strong>
+            </div>
+            
+            <div class="options-grid">
+                <label class="option-card">
+                    <input type="radio" name="answer" value="A" required>
+                    <div class="option-content">
+                        <span class="option-letter">A</span>
+                        <span class="option-text">Child A</span>
+                    </div>
+                </label>
+
+                <label class="option-card">
+                    <input type="radio" name="answer" value="B">
+                    <div class="option-content">
+                        <span class="option-letter">B</span>
+                        <span class="option-text">Child B</span>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <a href="{{ url_for('test', test_name='musical') }}" class="nav-button">
+                &lt; musical
+            </a>
+            <button type="submit" class="submit-button">
+                Submit Answer
+            </button>
+            <a href="{{ url_for('test', test_name='naturalistic') }}" class="nav-button">
+                Next: Naturalistic &gt;
+            </a>
+        </div>
+    </form>
+</div>
+
+   {% elif test_name == 'naturalistic' %}
+<div class="naturalistic-test">
+    <h2>Naturalistic Intelligence</h2>
+    
+    {% if result %}
+    <div class="result-box">
+        <div class="feedback {% if result.is_correct %}correct-feedback{% else %}incorrect-feedback{% endif %}">
+            {% if result.is_correct %}
+                ✅ All correct! Great job!
+            {% else %}
+                ❌ Let's review:
+                <div class="answer-review">
+                    {% for animal in result.answers %}
+                    <div class="answer-item {% if animal in result.correct_answers %}correct-answer{% else %}incorrect-answer{% endif %}">
+                        {{ animal }} 
+                        {% if animal in result.correct_answers %}✓{% else %}✗{% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    <form method="POST">
+        <div class="test-header">
+            <h3>Habitat Matching</h3>
+        </div>
+
+        <div class="instructions-box">
+            <p>Select all animals that live in the jungle:</p>
+            <div class="question-box">
+                <strong>Which of these animals live in the jungle? (Select all that apply)</strong>
+            </div>
+            
+            <div class="animal-grid">
+                {% for animal in ['Elephant', 'Dolphin', 'Tiger', 'Penguin'] %}
+                <label class="animal-card">
+                    <input type="checkbox" name="animals" value="{{ animal }}">
+                    <span class="checkmark"></span>
+                           {{ animal }}
+                </label>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="navigation">
+            <a href="{{ url_for('test', test_name='interpersonal') }}" class="nav-button">
+                &lt; Previous: Interpersonal
+            </a>
+            <button type="submit" class="submit-button">
+                Submit Answers
+            </button>
+            <a href="{{ url_for('test', test_name='visual') }}" class="nav-button">
+                Next: Visual-Spatial &gt;
+            </a>
+        </div>
+    </form>
+</div>
+
 
     {% elif test_name == 'visual' %}
-        <h2>Visual-Spatial</h2>
-        <!-- Visual test content -->
+<div class="visual-test">
+    <h2>Visual-Spatial Intelligence</h2>
+    
+    {% if result %}
+    <div class="result-box {% if result.is_correct %}correct{% else %}incorrect{% endif %}">
+        {% if result.is_correct %}
+            ✅ Perfect! You found the right shape!
+        {% else %}
+            ❌ Almost! The correct shape was {{ result.correct_answer }}
+        {% endif %}
+    </div>
+    {% endif %}
 
-    {% elif test_name == 'memory' %}
-        <h2>Memory & Sequencing</h2>
-        <!-- Memory test content -->
+    <form method="POST">
+        <div class="test-header">
+            <h3>Shape Rotation</h3>
+        </div>
 
-    {% endif %}  <!-- This was missing -->
+        <div class="instructions-box">
+            <p>Help your child pick the shape that completes the image:</p>
+            <div class="puzzle-display">
+                <!-- Puzzle image placeholder -->
+                <div class="puzzle-shape missing-piece"></div>
+                <div class="puzzle-shape existing-piece"></div>
+            </div>
+            
+            <div class="question-box">
+                <strong>Which shape completes the puzzle?</strong>
+            </div>
+        </div>
 
-  <div class="progress">
-  Completed {{ progress.completed_tests|length }} of 9 tests
+        <div class="shape-options">
+            <label class="shape-card">
+                <input type="radio" name="answer" value="A" required>
+                <div class="shape-content">
+                    <span class="option-letter">A</span>
+                    <div class="shape-preview shape-a"></div>
+                </div>
+            </label>
+
+            <label class="shape-card">
+                <input type="radio" name="answer" value="B">
+                <div class="shape-content">
+                    <span class="option-letter">B</span>
+                    <div class="shape-preview shape-b"></div>
+                </div>
+            </label>
+
+            <label class="shape-card">
+                <input type="radio" name="answer" value="C">
+                <div class="shape-content">
+                    <span class="option-letter">C</span>
+                    <div class="shape-preview shape-c"></div>
+                </div>
+            </label>
+        </div>
+
+        <div class="navigation">
+            <a href="{{ url_for('test', test_name='naturalistic') }}" class="nav-button">
+                &lt; Previous: Naturalistic
+            </a>
+            <button type="submit" class="submit-button">
+                Submit Answer
+            </button>
+            <a href="{{ url_for('test', test_name='memory') }}" class="nav-button">
+                Next: Memory &gt;
+            </a>
+        </div>
+    </form>
 </div>
+
+
+   {% elif test_name == 'memory' %}
+<div class="memory-test">
+    <h2>Memory & Sequencing</h2>
+    
+    {% if result %}
+    <div class="result-box {% if result.is_correct %}correct{% else %}incorrect{% endif %}">
+        {% if result.is_correct %}
+            ✅ Correct! Great memory!
+        {% else %}
+            ❌ Not quite right. The correct sequence was "{{ result.correct_answer }}"
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <form method="POST">
+        <div class="test-header">
+            <h3>Creature Card Game</h3>
+        </div>
+
+        <div class="instructions-box">
+            <p>Four creature cards will appear in a sequence. Each creature does a fun action. Watch carefully!</p>
+            
+            <div class="question-box">
+                <strong>What did the Monkey do after the Panda ate bamboo?</strong>
+            </div>
+        </div>
+
+        <div class="options-grid">
+            <label class="option-card">
+                <input type="radio" name="answer" value="swing" required>
+                <div class="option-content">
+                    <span class="option-letter">A</span>
+                    <span class="option-text">Swing on a tree</span>
+                </div>
+            </label>
+
+            <label class="option-card">
+                <input type="radio" name="answer" value="splash">
+                <div class="option-content">
+                    <span class="option-letter">B</span>
+                    <span class="option-text">Splash water</span>
+                </div>
+            </label>
+
+            <label class="option-card">
+                <input type="radio" name="answer" value="roar">
+                <div class="option-content">
+                    <span class="option-letter">C</span>
+                    <span class="option-text">Roar like a T-Rex</span>
+                </div>
+            </label>
+        </div>
+
+        <div class="navigation">
+            <a href="{{ url_for('test', test_name='visual') }}" class="nav-button">
+                &lt; Previous: Visual-Spatial
+            </a>
+            <button type="submit" class="submit-button">
+                Submit Answer
+            </button>
+            <a href="{{ url_for('summary') }}" class="nav-button">
+                View Results &gt;
+            </a>
+        </div>
+    </form>
+</div>
+
+    {% endif %}
+
+    <div class="progress">
+        Completed {{ progress.completed_tests|length }} of 8 tests
+    </div>
 </div>
 {% endblock %}
